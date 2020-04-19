@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var jade = require('jade');
 var multer = require('multer');
-
+require("./config/db");
 var indexRouter = require('./routes/index');
 var companyDetailsRouter = require('./routes/companyDetails');
 var companyMainRouter = require('./routes/companyMainDetails');
@@ -13,16 +13,6 @@ var companyVotingRouter = require('./routes/companyVotingDetails');
 var companyQuestionRouter = require('./routes/companyQuestionDetails');
 var candidateDetailRouter = require('./routes/candidateDetails');
 var liveVotingRouter = require('./routes/liveVoting');
-var mongoose = require('mongoose');
-
-// const CompanyDetails = require('./models/companyDetails');
-
-const url = 'mongodb://localhost:27017/CompanyDetail';
-const connect = mongoose.connect(url);
-
-connect.then((db) => {
-    console.log("Connected correctly to server");
-}, (err) => { console.log(err); });
 
 
 var app = express();
@@ -130,4 +120,4 @@ function isLoggedIn(req, res, next){
   res.redirect("/c/default/login");
 }
 
-module.exports = app;
+app.listen(3000, () => console.log("server started"));
