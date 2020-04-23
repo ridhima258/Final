@@ -15,7 +15,8 @@ var votingSchema = new mongoose.Schema({
     // companyPassword : String ,
 });
 
-module.exports = votingSchema;
+module.exports = Voting = mongoose.model("voting", votingSchema);
+
 
 
 

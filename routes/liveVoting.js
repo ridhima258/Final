@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const VotingDetail = require('../models/voting');
 const QuestionDetail = require('../models/question');
-const CandidateDetail = require('../models/candidateDetails');
+const Candidate = require('../models/candidateDetails');
 
 
 var User = require('../models/user');
@@ -68,23 +68,29 @@ companyDetailRouter.route('/:companyName/login')
           });
 })
 
+const Voting = require("../models/voting");
+// const Candidate = require("../models/candidateDetails");
+
 companyDetailRouter.route('/:companyName/:votingName/:num')
 .get(function(req, res) {
-    if(req.session.count){
-    var a = mongoose.model(req.params.companyName+"Voting" , VotingDetail);
-    var b = mongoose.model(req.params.companyName+"Question" , QuestionDetail);
-    var c = mongoose.model(req.params.companyName+"Candidate" , CandidateDetail);
-    a.find({votingName : req.params.votingName},function(err, user) {
-        // console.log("user "+ user);
+    console.log(req.params, req.body)
+    if(req.session.count) {
+    // var a = mongoose.model(req.params.companyName + "Voting" , VotingDetail);
+    // var b = mongoose.model(req.params.companyName + "Question" , QuestionDetail);
+    // var c = mongoose.model(req.params.companyName + "Candidate" , CandidateDetail);
+    Voting.find({votingName : req.params.votingName},function(err, user) {
+        console.log("user "+ user);
+        console.log("err "+ err);
         if (err)
             res.send(err);
+        console.log(user)
         // console.log(user[0]._id);
-        b.find({votingId: user[0]._id}, function(err, result){
+        Voting.find({votingId: user[0]._id}, function(err, result){
             if(err){
 
             }
             // console.log();
-            c.find({questionId: result[req.params.num]._id}, function(err, result1){
+            Candidate.find({questionId: result[req.params.num]._id}, function(err, result1){
                 if(err){
     
                 }
